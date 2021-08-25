@@ -9,7 +9,7 @@ describe("Book model", () => {
     Object.assign(book, {
       name: "Atomic Habits",
       description: "An Easy & Proven Way to Build Good Habits & Break Bad Ones",
-      athor: "James Clear",
+      author: "James Clear",
       created_at: new Date(),
       deleted_at: new Date(),
     });
@@ -17,7 +17,7 @@ describe("Book model", () => {
     expect(book).toMatchObject({
       name: "Atomic Habits",
       description: "An Easy & Proven Way to Build Good Habits & Break Bad Ones",
-      athor: "James Clear",
+      author: "James Clear",
     });
     expect(validate(book.id)).toBe(true);
     expect(book.created_at).toBeInstanceOf(Date);
