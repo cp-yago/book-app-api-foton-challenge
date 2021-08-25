@@ -1,3 +1,4 @@
+import { IListBooksQuery } from "../interfaces/IListBooksQuery";
 import { Book } from "../model/Book";
 
 interface ICreateBookDTO {
@@ -8,7 +9,7 @@ interface ICreateBookDTO {
 
 interface IBooksRepository {
   create({ name, description, author }: ICreateBookDTO): Book;
-  list(): Book[];
+  list(query: IListBooksQuery): Book[];
   findById(id: string): Book | undefined;
   findByName(name: string): Book | undefined;
 }

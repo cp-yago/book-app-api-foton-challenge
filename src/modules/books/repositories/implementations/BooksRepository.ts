@@ -1,5 +1,4 @@
-import { v4 as uuidv4 } from "uuid";
-
+import { IListBooksQuery } from "../../interfaces/IListBooksQuery";
 import { Book } from "../../model/Book";
 import { IBooksRepository, ICreateBookDTO } from "../IBooksRepository";
 
@@ -33,8 +32,25 @@ class BooksRepository implements IBooksRepository {
     return book;
   }
 
-  list(): Book[] {
-    return this.books;
+  list(query: IListBooksQuery): Book[] {
+    const queryKeys = Object.keys(query) as [keyof Book];
+
+    const filteredBooks = this.books.filter((book) => {
+      const foundByQueryItem: Book[] = [];
+
+      queryKeys.forEach((key) => {
+        const valueToSearch = query[key]?.toString().toLowerCase().trim();
+        const bookValue = book[key].toString().toLowerCase().trim();
+
+        if (bookValue.includes(valueToSearch as string)) {
+          foundByQueryItem.push(book);
+        }
+      });
+
+      return foundByQueryItem.length === queryKeys.length;
+    });
+
+    return filteredBooks;
   }
 
   findById(id: string): Book | undefined {
