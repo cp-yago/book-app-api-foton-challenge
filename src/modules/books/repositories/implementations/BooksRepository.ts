@@ -1,4 +1,8 @@
-import { IListBooksQuery } from "../../interfaces/IListBooksQuery";
+/* eslint-disable radix */
+import {
+  IListBooksQuery,
+  IListBookOptions,
+} from "../../interfaces/IListBooksQuery";
 import { Book } from "../../model/Book";
 import { IBooksRepository, ICreateBookDTO } from "../IBooksRepository";
 
@@ -32,15 +36,17 @@ class BooksRepository implements IBooksRepository {
     return book;
   }
 
-  list(query: IListBooksQuery): Book[] {
-    const queryKeys = Object.keys(query) as [keyof Book];
+  list(query: IListBooksQuery & IListBookOptions): Book[] {
+    const { page = 0, pageLimit = 9, ...queryParams } = query;
+
+    const queryKeys = Object.keys(queryParams) as [keyof Book];
 
     const filteredBooks = this.books.filter((book) => {
       const foundByQueryItem: Book[] = [];
 
       queryKeys.forEach((key) => {
         const valueToSearch = query[key]?.toString().toLowerCase().trim();
-        const bookValue = book[key].toString().toLowerCase().trim();
+        const bookValue = book[key]?.toString().toLowerCase().trim();
 
         if (bookValue.includes(valueToSearch as string)) {
           foundByQueryItem.push(book);
@@ -49,6 +55,10 @@ class BooksRepository implements IBooksRepository {
 
       return foundByQueryItem.length === queryKeys.length;
     });
+
+    if (page && pageLimit) {
+      return filteredBooks.slice(page, pageLimit);
+    }
 
     return filteredBooks;
   }
