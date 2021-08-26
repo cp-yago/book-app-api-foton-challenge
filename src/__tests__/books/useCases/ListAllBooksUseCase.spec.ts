@@ -24,7 +24,7 @@ describe("ListAllBooksUseCase", () => {
       author: "Chris Kuenne, John Danner",
     });
 
-    const books = listAllBooksUseCase.execute();
+    const books = listAllBooksUseCase.execute({});
 
     expect(books).toEqual(expect.arrayContaining([book1, book2]));
   });

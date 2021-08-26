@@ -17,7 +17,7 @@ describe("CreateBookUseCase", () => {
       author: '"James Clear"',
     });
 
-    expect(booksRepository.list()).toStrictEqual([book]);
+    expect(booksRepository.list({})).toStrictEqual([book]);
   });
 
   it("should not be able to create new books if name already exists", () => {

@@ -32,7 +32,7 @@ describe("BooksRepository", () => {
       description: "An Easy & Proven Way to Build Good Habits & Break Bad Ones",
       author: "James Clear",
     });
-    const books = booksRepository.list();
+    const books = booksRepository.list({});
 
     expect(books).toStrictEqual(expect.arrayContaining([book]));
   });
