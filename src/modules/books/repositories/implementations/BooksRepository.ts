@@ -37,7 +37,7 @@ class BooksRepository implements IBooksRepository {
   }
 
   list(query: IListBooksQuery & IListBookOptions): Book[] {
-    const { page = 0, pageLimit = 9, ...queryParams } = query;
+    const { page = 0, pageLimit = 6, ...queryParams } = query;
 
     const queryKeys = Object.keys(queryParams) as [keyof Book];
 
